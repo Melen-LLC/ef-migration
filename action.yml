@@ -2,15 +2,31 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  migration-name:
+    description: 'Name of initial migration'
     required: true
-    default: 'World'
+    default: 'InitialMigration'
+ 
+  target-project:
+    description: 'Project where migrations will reside'
+    required: true
+
+  startup-project: 
+    description: 'Startup project (ie web api, web app, etc)'
+    required: true
+
+  context-name: 
+    description: 'Name of the DbContext'
+    required: true
+  
+  output-dir: 
+    description: 'Name of directory that migrations will reside in target project'
+    required: true
+    default: 'Data/Migrations'
+
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    -migrationName ${{ inputs.migration-name }} -targetProject ${{ inputs.target-project }} -startupProject ${{ inputs.startup-project }} -contextName ${{ inputs.context-name }} -outputDirectory ${{ inputs.output-dir }}

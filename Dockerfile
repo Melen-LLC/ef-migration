@@ -1,6 +1,5 @@
-FROM alpine:3.10
+FROM mcr.microsoft.com/dotnet/sdk:5.0
+run dotnet tool install --global dotnet-ef
+ADD entrypoint.ps1 .
 
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+CMD [ "pwsh", "-c", "./entrypoint.ps1"]
